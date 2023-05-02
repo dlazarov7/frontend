@@ -1,26 +1,72 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route, Outlet, Link } from "react-router-dom";
+import Home from "./Pages/HomePage";
+import Employees from './Pages/Employees';
+import Companies from './Pages/Companies';
+import Teams from './Pages/Teams'
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Basic react</h1>
+
+
+
+      {/* Routes nest inside one another. Nested route paths build upon
+            parent route paths, and nested route elements render inside
+            parent route elements. See the note about <Outlet> below. */}
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="Employees" element={<Employees />} />
+          <Route path="Teams" element={<Teams />} />
+
+          {/* Using path="*"" means "match anything", so this route
+                acts like a catch-all for URLs that we don't have explicit
+                routes for. */}
+          <Route path="*" element={<Companies />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
 
-export default App;
+function Layout() {
+  return (
+    <div >
+      {/* A "layout route" is a good place to put markup you want to
+          share across all the pages on your site, like navigation. */}
+      <nav className='HorizontalBar'>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/employees">Employees</Link>
+          </li>
+          <li>
+            <Link to="/teams">Teams</Link>
+          </li>
+          <li>
+            <Link to="/companies"> Companies</Link>
+          </li>
+        </ul>
+      </nav>
+
+      <hr />
+
+      {/* An <Outlet> renders whatever child route is currently active,
+          so you can think about this <Outlet> as a placeholder for
+          the child routes we defined above. */}
+      <Outlet />
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
