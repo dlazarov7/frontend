@@ -4,6 +4,7 @@ import Home from "./Pages/HomePage";
 import Employees from './Pages/Employees';
 import Companies from './Pages/Companies';
 import Teams from './Pages/Teams'
+import Login from './Pages/Login';
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="Employees" element={<Employees />} />
           <Route path="Teams" element={<Teams />} />
+          <Route path='Login' element={<Login/>}/>
 
           {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
@@ -50,6 +52,9 @@ function Layout() {
           <li>
             <Link to="/companies"> Companies</Link>
           </li>
+          <li>
+            <Link to="/login" >Login</Link>
+            </li>
         </ul>
       </nav>
 

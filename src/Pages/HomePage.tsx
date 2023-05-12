@@ -42,7 +42,7 @@ export default function Home() {
     }
 
     const [empExpInCompany, setEmpExtInCompany] = useState<Array<{ fullName: string }>>();
-    const handleEmpExpInCompany = () => {
+    const handleEmpExpInCompany = (event:React.MouseEvent<HTMLButtonElement>) => {
         axios.get(`http://localhost:4000/employees/company?name=${companyName}`)
             .then(res => {
                 if (res.status === 200) {
@@ -50,6 +50,9 @@ export default function Home() {
                 }
             })
             .catch(err => alert(err));
+
+            event.preventDefault()
+            setCompanyName('');
     }
 
     return (

@@ -8,9 +8,9 @@ export default function Teams() {
     setTeamName(e.target.value);
   }
 
-  const [teamInfo, setTeamInfo] = useState<Array<{ id: number, managerId: number, fullName: string, email: string, team: { description: string } }>>([]);
+  const [teamInfo, setTeamInfo] = useState<Array<{ id: number, managerId: number, fullName: string, email: string, team: { name:string, description: string } }>>([]);
 
-  const handleTeamInfo = () => {
+  const handleTeamInfo = (event:React.MouseEvent<HTMLButtonElement>) => {
     axios.get(`http://localhost:4000/team/info?name=${teamName}`)
       .then(res => {
         if (res.status === 200) {
@@ -18,6 +18,10 @@ export default function Teams() {
         }
       })
       .catch(err => alert(err));
+
+      event.preventDefault();
+
+      setTeamName("");
   }
 
   const [depName, setDepName] = useState<string>("");
@@ -27,7 +31,7 @@ export default function Teams() {
 
   const [depAvg,setDepAvg]=useState<{department:string, avgSalary:number}>()
 
-  const handleDepAvgSalary = () => {
+  const handleDepAvgSalary = (event:React.MouseEvent<HTMLButtonElement>) => {
     axios.get(`http://localhost:4000/department/avg/salary?depName=${depName}`)
       .then(res => {
         if (res.status === 200) {
@@ -35,6 +39,10 @@ export default function Teams() {
         }
       })
       .catch(err=>alert(err));
+
+      event.preventDefault();
+
+      setDepName("");
   }
 
 
@@ -46,14 +54,14 @@ export default function Teams() {
       <button onClick={handleTeamInfo}>Enter</button><br />
       {
         teamInfo ?
-          <>
-            {teamInfo.map((emp, index = 1) => {
-              { index++ }
-
-              return (
-
+        <>
+        {/* <h2>Teammates </h2>  */}
+            {
+            teamInfo.map(emp => {
+              
+              
+              return ( 
                 <>
-                  <h2>Teammate {index}</h2>
                   <ul>
                     <li>Id: {emp.id} </li>
                     <li>Full name: {emp.fullName}</li>
@@ -63,13 +71,13 @@ export default function Teams() {
                   </ul>
                 </>
               );
-            })}
+            })};
           </>
           : null
       }
 
       <span className='heading'>Get avarage salary by department</span><br />
-      <label >Enter team name</label><br />
+      <label >Enter department name</label><br /> 
       <input type="text" value={depName } onChange={ handleChangeDepName} name="depName" /><br />
       <button onClick={ handleDepAvgSalary }>Enter</button><br />
 
