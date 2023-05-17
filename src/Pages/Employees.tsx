@@ -44,25 +44,25 @@ export default function Employees() {
       setId(0);
   }
 
-  const [firstName, setFirstName] = useState<string>("");
-  const handleChangeFirstName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value);
-  }
+  // const [firstName, setFirstName] = useState<string>("");
+  // const handleChangeFirstName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFirstName(e.target.value);
+  // }
 
-  const [lastName, setLastName] = useState<string>("");
-  const handleChangeLastName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(e.target.value);
-  }
+  // const [lastName, setLastName] = useState<string>("");
+  // const handleChangeLastName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setLastName(e.target.value);
+  // }
 
-  const [username, setUsername] = useState<string>("");
-  const handleChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-  }
+  // const [username, setUsername] = useState<string>("");
+  // const handleChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setUsername(e.target.value);
+  // }
 
-  const [email, setEmail] = useState<string>("");
-  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  }
+  // const [email, setEmail] = useState<string>("");
+  // const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setEmail(e.target.value);
+  // }
 
   //const [teamId, setTeamId] = useState<number>();
   // const handleChangeTeamId = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +84,11 @@ export default function Employees() {
 
 
   }, [updateAllTeams]);
+
+  const [idToRegisterAsEmp, setidToRegisterAsEmp] = useState<number>();
+    const handleChangeidToRegisterAsEmp = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setidToRegisterAsEmp(Number(e.target.value));
+    }
 
   const [selectedTeam, setSelectedTeam] = useState<string>("");
   const handleChangeSelectedTeam = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -125,7 +130,7 @@ export default function Employees() {
   const [addedEmp, setAddedEmp] = useState<{ id: number, firstName: string, lastName: string, username: string, email: string, teamId: number, position: string, salary: number, managerId: number }>();
 
   const handleAdd = (event: React.MouseEvent<HTMLButtonElement>) => {
-    axios.post(`http://localhost:4000/employee/add`, { firstName: firstName, lastName: lastName, username: username, email: email, teamId: team?.id, position: position, salary: salary, managerId: manager?.id })
+    axios.put(`http://localhost:4000/employee/add`, {id:idToRegisterAsEmp, teamId: team?.id, position: position, salary: salary, managerId: manager?.id })
       .then(res => {
         if (res.status === 200) {
 
@@ -139,10 +144,7 @@ export default function Employees() {
 
     event.preventDefault();
 
-    setFirstName('');
-    setLastName('');
-    setUsername('');
-    setEmail('');
+    
     //setTeamsToChose([]);
     setPosition('');
    // managers = [];
@@ -317,17 +319,12 @@ export default function Employees() {
           </>
           : null
       }
-      <span className='heading'>Add employee</span><br />
+      <span className='heading'>Handle employee</span><br />
 
       <form id="addEmployee" >
-        <label>First name</label><br />
-        <input type="text" value={firstName} onChange={handleChangeFirstName} name='firstName' /><br />
-        <label>Last name</label><br />
-        <input type="text" value={lastName} onChange={handleChangeLastName} name='lastName' /> <br />
-        <label> Username</label><br />
-        <input type="text" value={username} onChange={handleChangeUsername} name='username' /><br />
-        <label>Email</label><br />
-        <input type="text" value={email} onChange={handleChangeEmail} name='email' /><br />
+      <label >Id</label><br />
+        <input type="text" value={idToRegisterAsEmp} onChange={handleChangeidToRegisterAsEmp} name='idToRegisterAsEmp' /><br />
+        
         <label >Team</label><br />
         {/* <input type="text" value={teamId} onChange={handleChangeTeamId} name='teamId' /><br /> */}
 
@@ -356,7 +353,7 @@ export default function Employees() {
         <input type="text" value={position} onChange={handleChangePosition} name='position' /><br />
         <label >Salary</label><br />
         <input type="text" value={salary} onChange={handleChangeSalary} name='salary' /><br />
-        <button onClick={handleAdd}>Add</button><br />
+        <button onClick={handleAdd}>Submit data</button><br />
       </form>
 
       {
@@ -366,9 +363,6 @@ export default function Employees() {
 
             <ul key={addedEmp.id}>
               <li>Id: {addedEmp.id}</li>
-              <li>Full name: {addedEmp.firstName} {addedEmp.lastName}</li>
-              <li>Username: {addedEmp.username}</li>
-              <li>Email: {addedEmp.email}</li>
               <li>Team id: {addedEmp.teamId}</li>
               <li>Manager id: {addedEmp.managerId}</li>
               <li>Position: {addedEmp.position}</li>
@@ -396,13 +390,13 @@ export default function Employees() {
       <span className='heading'>Edit employee</span><br />
       <label >Id</label><br />
       <input type="text" value={idToEdit} onChange={handleChangeIdToEdit} name='idToEdit' /><br />
-      <label>First name</label><br />
+      <label >First name</label><br />
       <input type="text" value={newFirstName} onChange={handleChangeNewFirstName} name='newFirstName' /><br />
-      <label>Last name</label><br />
+      <label >Last name</label><br />
       <input type="text" value={newLastName} onChange={handleChangeNewLastName} name='newLastName' /> <br />
-      <label> Username</label><br />
+      <label > Username</label><br />
       <input type="text" value={newUsername} onChange={handleChangeNewUsername} name='newUsername' /><br />
-      <label>Email</label><br />
+      <label >Email</label><br />
       <input type="text" value={newEmail} onChange={handleChangeNewEmail} name='newEmail' /><br />
       <label >Team</label><br />
       <select className='basic-single ' name="value" onChange={handleChangeSelectedTeam}>

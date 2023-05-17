@@ -5,12 +5,17 @@ import Employees from './Pages/Employees';
 import Companies from './Pages/Companies';
 import Teams from './Pages/Teams'
 import Login from './Pages/Login';
+import Register from './Pages/Register';
 
 export default function App() {
-  return (
-    <div>
-      <h1>Basic react</h1>
 
+
+  return (
+    
+    <div>
+      
+      <h1>Basic react</h1>
+   
 
 
       {/* Routes nest inside one another. Nested route paths build upon
@@ -21,7 +26,8 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="Employees" element={<Employees />} />
           <Route path="Teams" element={<Teams />} />
-          <Route path='Login' element={<Login/>}/>
+          <Route path='Login' element={<Login />} />
+          <Route path='Register' element={<Register/>}/>
 
           {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
@@ -52,9 +58,12 @@ function Layout() {
           <li>
             <Link to="/companies"> Companies</Link>
           </li>
-          <li>
-            <Link to="/login" >Login</Link>
-            </li>
+          <li className='login' style={{float: 'right'}} >
+            <Link to="/login" >Log in</Link>
+          </li>
+          <li className='login' style={{float: 'right'}}>
+            <Link to="register">Register</Link>
+          </li>
         </ul>
       </nav>
 
@@ -67,6 +76,8 @@ function Layout() {
     </div>
   );
 }
+
+
 
 
 

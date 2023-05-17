@@ -1,7 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+
 
 export default function Login() {
+    
     const [userData, setUserData] = useState<{ email: string, password: string }>({ email: "", password: "" });
     const [currentUser, setCurrentUser] = useState<{ fullName: string }>({ fullName: "" });
     const [isUSerLogged, setISUserLogged] = useState<boolean>(false);
@@ -18,7 +20,7 @@ export default function Login() {
         axios.post("http://localhost:4000/login", userData)
             .then(res => {
                 if (res.status === 200) {
-                    setCurrentUser({ ...currentUser, fullName: `${res.data.first_name} ${res.data.last_name}` });
+                    setCurrentUser({ ...currentUser, fullName: `${res.data.firstName} ${res.data.lastName}` });
                     setISUserLogged(true);
                 }
             })
@@ -30,7 +32,6 @@ export default function Login() {
             .then(res => {
                 if (res.status === 200) {
                     setCurrentUser({ fullName: "" });
-                    setISUserLogged(true);
                     setISUserLogged(false);
                     alert('Successful logout')
                 }
